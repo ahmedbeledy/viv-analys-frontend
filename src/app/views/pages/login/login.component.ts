@@ -1,50 +1,40 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../../services/auth.service';
-import { TokenStorageService } from '../../../services/token-storage.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-
-  form: any = {
-    username: null,
-    password: null
-  };
+export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
   roles: string[] = [];
 
-   Form!: FormGroup;
+  constructor(private modalService: NgbModal,private formbulid: FormBuilder,private authService: AuthService, private tokenStorage: TokenStorageService) { }
+  loginForm!: FormGroup;
+  closeResult = '';
 
-  constructor(private formbulid: FormBuilder, private authService: AuthService, private tokenStorage: TokenStorageService) {
-    this.Form = this.formbulid.group({
-      password: ['', [Validators.required]],
+  ngOnInit(): void {  this.loginForm = this.formbulid.group({
+    password: ['', [Validators.required]],
 
-      email: ['mail@example.com', [Validators.required, Validators.email]]
-    })
-  }
-
-  ngOnInit() {
-
-
-
-
-
+    email: ['mail@example.com', [Validators.required, Validators.email]]
+  })
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
     }
   }
 
-  onSubmit() {
-    let email = this.Form.controls['email'].value
-    let password = this.Form.controls['password'].value
-    this.authService.login(email, password).subscribe(
+  onSubmit(): void {
+    // const { username, password } = this.loginForm;
+
+    this.authService.login("username", "password").subscribe(
       data => {
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveRefreshToken(data.refreshToken);
@@ -61,7 +51,22 @@ export class LoginComponent {
       }
     );
   }
-
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+  open(content: any) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
   reloadPage(): void {
     window.location.reload();
   }

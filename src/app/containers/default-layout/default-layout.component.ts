@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-// import { LoginComponent } from ';
-
+ 
 import { navItems } from './_nav';
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: '../../views/pages/login/login.component.html'
+  templateUrl: './default-layout.component.html',
 })
 export class DefaultLayoutComponent {
 
