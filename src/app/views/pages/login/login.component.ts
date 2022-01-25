@@ -3,12 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   isLoggedIn = false;
@@ -16,11 +17,19 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   roles: string[] = [];
 
-  constructor(private modalService: NgbModal,private formbulid: FormBuilder,private authService: AuthService, private tokenStorage: TokenStorageService) { }
+  constructor(private routingservice:Router,private modalService: NgbModal,private formbulid: FormBuilder,private authService: AuthService, private tokenStorage: TokenStorageService) { }
   loginForm!: FormGroup;
+  registerForm!: FormGroup;
+
   closeResult = '';
 
-  ngOnInit(): void {  this.loginForm = this.formbulid.group({
+  ngOnInit(): void { 
+     this.loginForm = this.formbulid.group({
+    password: ['', [Validators.required]],
+
+    email: ['mail@example.com', [Validators.required, Validators.email]]
+  })
+  this.registerForm = this.formbulid.group({
     password: ['', [Validators.required]],
 
     email: ['mail@example.com', [Validators.required, Validators.email]]
@@ -30,20 +39,36 @@ export class LoginComponent implements OnInit {
       this.roles = this.tokenStorage.getUser().roles;
     }
   }
-
+  onSubmitregister(): void {
+    let user= this.registerForm.controls["email"].value  
+   let pass =this.registerForm.controls["password"].value
+     this.authService.register(user ,pass).subscribe(
+       data => {
+          
+         this.reloadPage();
+       },
+       err => {
+         this.errorMessage = err.error.message;
+         this.isLoginFailed = true;
+       }
+     );
+   }
   onSubmit(): void {
-    // const { username, password } = this.loginForm;
-
-    this.authService.login("username", "password").subscribe(
+   let user= this.loginForm.controls["email"].value  
+  let pass =this.loginForm.controls["password"].value
+    this.authService.login(user ,pass).subscribe(
       data => {
-        this.tokenStorage.saveToken(data.accessToken);
-        this.tokenStorage.saveRefreshToken(data.refreshToken);
+        this.tokenStorage.saveToken(data.access_token);
+        this.tokenStorage.saveRefreshToken(data.refresh_token);
+        data.user=user
         this.tokenStorage.saveUser(data);
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        this.roles = this.tokenStorage.getUser().roles;
-        this.reloadPage();
+      //  this.roles = this.tokenStorage.getUser().roles;
+      this.routingservice.navigateByUrl('/dashboard')
+
+
       },
       err => {
         this.errorMessage = err.error.message;
