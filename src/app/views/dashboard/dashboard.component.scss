@@ -5,3 +5,25 @@
     }
   }
 }
+.maindark th{
+  background: #000000;
+color: #fff;
+}
+.linkimg {
+  background: #008BFF;
+  border-radius: 3px;
+  padding: 1px 8px 5px 8px;
+
+
+
+}td {
+  max-width: 3vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}tr.dark {
+  background: #E3E9F1;
+  color: #000;
+}ul.pagination {
+  width: 1vw!important;
+}

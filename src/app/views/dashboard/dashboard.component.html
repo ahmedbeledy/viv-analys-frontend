@@ -1,4 +1,4 @@
-<app-widgets-dropdown></app-widgets-dropdown>
+<!-- <app-widgets-dropdown></app-widgets-dropdown>
 <c-card class="mb-4">
   <c-card-body>
     <c-row>
@@ -68,7 +68,7 @@
     </c-chart>
   </c-card-body>
   <c-card-footer>
-    <c-row class="text-center" [md]="5" [xs]="1">
+    <c-row   [md]="5" [xs]="1">
       <c-col class="mb-sm-2 mb-0">
         <div class="text-medium-emphasis">Visits</div>
         <strong>29.703 Users (40%)</strong>
@@ -106,10 +106,10 @@
       </c-col>
     </c-row>
   </c-card-footer>
-</c-card>
+</c-card> -->
 
-<app-widgets-brand [withCharts]="true"></app-widgets-brand>
-
+<!-- <app-widgets-brand [withCharts]="true"></app-widgets-brand> -->
+<!-- 
 <c-row>
   <c-col xs>
     <c-card class="mb-4">
@@ -429,86 +429,57 @@
       </c-card-body>
     </c-card>
   </c-col>
-</c-row>
+</c-row> -->
 <c-row>
   <c-col xs>
     <c-card class="mb-4">
-      <c-card-header>Users</c-card-header>
+      <c-card-header>Comment</c-card-header>
       <c-card-body>
-        <table
-          [hover]="true"
-          [responsive]="true"
-          [striped]="true"
-          align="middle"
-          cTable
-          class="mb-0 border"
-        >
-          <thead cTableColor="light">
-          <tr>
-            <th class="text-center">
-              <svg cIcon name="cilPeople"></svg>
-            </th>
-            <th>User</th>
-            <th class="text-center">Country</th>
-            <th>Usage</th>
-            <th class="text-center">Payment Method</th>
-            <th>Activity</th>
-          </tr>
+        <table [hover]="true" [responsive]="true" align="middle" cTable class="mb-0 border">
+          <thead>
+            <tr class="maindark">
+              <th> ID </th>
+              <th>Position</th>
+              <th>Owned by</th>
+              <th>Annotation title</th>
+              <th>Date</th>
+              <th>Last comment</th>
+              <th> <i class="cis-link-alt"></i>
+              </th>
+
+            </tr>
           </thead>
-          <tbody>
-          <tr *ngFor="let user of users; index as i">
-            <td class="text-center">
-              <c-avatar
-                size="md"
-                src="{{ user.avatar }}"
-                status="{{ user.status }}"
-              ></c-avatar>
-            </td>
-            <td>
-              <div>{{ user.name }}</div>
-              <div class="small text-medium-emphasis">
-                <span>{{ user.state }}</span> | Registered:
-                {{ user.registered }}
-              </div>
-            </td>
-            <td class="text-center">
-              <svg cIcon
-                id="{{ user.country + user.name }}"
-                name="cif{{ user.country }}"
-                size="xl"
-                title="{{ user.country }}"
-              ></svg>
-            </td>
-            <td>
-              <div class="clearfix">
-                <div class="float-start">
-                  <strong>{{ user.usage }}%</strong>
-                </div>
-                <div class="float-end">
-                  <small class="text-medium-emphasis">
-                    {{ user.period }}
-                  </small>
-                </div>
-              </div>
-              <c-progress thin
-              >
-                <c-progress-bar
-                  [value]="user.usage"
-                  color="{{ user.color }}"
-                ></c-progress-bar
-                >
-              </c-progress>
-            </td>
-            <td class="text-center">
-              <svg cIcon name="cibCc{{ user.payment }}" size="xl"></svg>
-            </td>
-            <td>
-              <div class="small text-medium-emphasis">Last login</div>
-              <strong>{{ user.activity }}</strong>
-            </td>
-          </tr>
+          <tbody *ngFor="let commentd of comment; index as i">
+             <tr *ngIf="commentd.replied&&(page-1)*10<=i&&(page)*10>=i" class="dark">
+              <td>{{i}} </td>
+              <td>{{commentd.annotation_position}} </td>
+              <td>{{commentd.owned_by_name}} </td>
+              <td>{{commentd.annotation_title}} </td>
+              <td>{{commentd.comment_created_date }} </td>
+              <td>{{commentd.comment_text}} </td>
+              <td><a [href]="commentd.link" target="_blank" class="linkimg"> <img src="../../../assets/img/color.svg">
+                </a>
+              </td>
+            </tr>
+            <tr *ngIf="!commentd.replied&&(page-1)*10<=i&&(page)*10>=i" class="light">
+              <td>{{i}} </td>
+              <td>{{commentd.annotation_position}} </td>
+              <td>{{commentd.owned_by_name}} </td>
+              <td>{{commentd.annotation_title}} </td>
+              <td>{{commentd.comment_created_date }} </td>
+              <td>{{commentd.comment_text}} </td>
+              <td><a [href]="commentd.link" target="_blank" class="linkimg"> <img src="../../../assets/img/color.svg">
+                </a>
+              </td>
+            </tr>
+          
+
           </tbody>
-        </table>
+       
+
+
+        </table>   <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [rotate]="true"
+        [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
       </c-card-body>
     </c-card>
   </c-col>

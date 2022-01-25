@@ -16,7 +16,7 @@ export class TokenStorageService {
 
   public saveToken(token: string): void {
     window.sessionStorage.removeItem(TOKEN_KEY);
-    window.sessionStorage.setItem(TOKEN_KEY, token);
+    window.sessionStorage.setItem(TOKEN_KEY,'Bearer '+ token);
 
     const user = this.getUser();
     if (user.id) {
@@ -25,7 +25,7 @@ export class TokenStorageService {
   }
 
   public getToken(): string | null {
-    return window.sessionStorage.getItem(TOKEN_KEY);
+    return  window.sessionStorage.getItem(TOKEN_KEY);
   }
 
   public saveRefreshToken(token: string): void {

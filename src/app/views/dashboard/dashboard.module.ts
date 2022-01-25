@@ -14,16 +14,15 @@ import {
   TableModule,
   TabsModule
 } from '@coreui/angular';
-import { IconModule } from '@coreui/icons-angular';
+import { IconModule, IconSetModule } from '@coreui/icons-angular';
 import { ChartjsModule } from '@coreui/angular-chartjs';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 
 import { WidgetsModule } from '../widgets/widgets.module';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from 'src/app/app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+ 
 
 @NgModule({
   imports: [
@@ -43,7 +42,7 @@ import { HttpClientModule } from '@angular/common/http';
     ChartjsModule,
     AvatarModule,
     TableModule,
-    WidgetsModule
+    WidgetsModule,NgbModule
   ],
   declarations: [DashboardComponent]
 })
