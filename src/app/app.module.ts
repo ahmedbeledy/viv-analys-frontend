@@ -3,7 +3,8 @@ import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@a
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+ 
+  
 import {
   PERFECT_SCROLLBAR_CONFIG,
   PerfectScrollbarConfigInterface,
@@ -41,11 +42,11 @@ import {
   SharedModule,
   SidebarModule,
   TabsModule,
-  UtilitiesModule,
+  UtilitiesModule
   
 } from '@coreui/angular';
 
-import { IconModule, IconSetService } from '@coreui/icons-angular';
+import { IconModule, IconSetModule, IconSetService } from '@coreui/icons-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { GridviewComponent } from './views/gridview/gridview.component';
  
@@ -89,16 +90,17 @@ const APP_CONTAINERS = [
     CardModule, BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule, IconModule,
+    IconSetModule.forRoot()
   ],
-  providers: [
+  providers: [IconSetService,
     {
       provide: LocationStrategy,
-      useClass: HashLocationStrategy,
+      useClass: HashLocationStrategy
     },
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
-      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
     },
     IconSetService,
     Title
