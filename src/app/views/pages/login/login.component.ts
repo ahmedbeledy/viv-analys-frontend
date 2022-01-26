@@ -16,7 +16,8 @@ export class LoginComponent implements OnInit {
   isLoginFailed = false;
   errorMessage = '';
   roles: string[] = [];
-
+  regisitererror=false
+  loginerror=false
   constructor(private routingservice:Router,private modalService: NgbModal,private formbulid: FormBuilder,private authService: AuthService, private tokenStorage: TokenStorageService) { }
   loginForm!: FormGroup;
   registerForm!: FormGroup;
@@ -31,25 +32,28 @@ export class LoginComponent implements OnInit {
   })
   this.registerForm = this.formbulid.group({
     password: ['', [Validators.required]],
-
+    username: ['youfirstname+lastname', [Validators.required]],
     email: ['mail@example.com', [Validators.required, Validators.email]]
   })
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
     }
-  }
+  }  
   onSubmitregister(): void {
-    let user= this.registerForm.controls["email"].value  
-   let pass =this.registerForm.controls["password"].value
-     this.authService.register(user ,pass).subscribe(
+    let mail= this.registerForm.controls["email"].value  
+    let user= this.registerForm.controls["username"].value  
+
+    let pass =this.registerForm.controls["password"].value
+     this.authService.register(mail,user ,pass).subscribe(
        data => {
           
          this.reloadPage();
        },
        err => {
-         this.errorMessage = err.error.message;
-         this.isLoginFailed = true;
+       console.log(err);
+       
+          this.regisitererror=true
        }
      );
    }
@@ -57,7 +61,7 @@ export class LoginComponent implements OnInit {
    let user= this.loginForm.controls["email"].value  
   let pass =this.loginForm.controls["password"].value
     this.authService.login(user ,pass).subscribe(
-      data => {
+      (data) => {
         this.tokenStorage.saveToken(data.access_token);
         this.tokenStorage.saveRefreshToken(data.refresh_token);
         data.user=user
@@ -71,7 +75,9 @@ export class LoginComponent implements OnInit {
 
       },
       err => {
-        this.errorMessage = err.error.message;
+        console.log(err);
+        
+        this.loginerror=true
         this.isLoginFailed = true;
       }
     );

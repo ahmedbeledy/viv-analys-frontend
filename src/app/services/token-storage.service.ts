@@ -30,7 +30,7 @@ export class TokenStorageService {
 
   public saveRefreshToken(token: string): void {
     window.sessionStorage.removeItem(REFRESHTOKEN_KEY);
-    window.sessionStorage.setItem(REFRESHTOKEN_KEY, token);
+    window.sessionStorage.setItem(REFRESHTOKEN_KEY, 'Bearer '+token);
   }
 
   public getRefreshToken(): string | null {
@@ -41,6 +41,16 @@ export class TokenStorageService {
     window.sessionStorage.removeItem(USER_KEY);
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
   }
+  public getUserstate(): any {
+    const user = window.sessionStorage.getItem(USER_KEY);
+    if (user) {
+      return true
+    }
+     
+
+    return false
+  }
+
 
   public getUser(): any {
     const user = window.sessionStorage.getItem(USER_KEY);

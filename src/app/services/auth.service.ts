@@ -21,16 +21,17 @@ export class AuthService {
     }, httpOptions);
   }
 
-  register(  email: string, password: string): Observable<any> {
+  register(  email: string,username:string, password: string): Observable<any> {
     return this.http.post(AUTH_API + 'register', {
        email,
+       username,
       password
     }, httpOptions);
   }
-
+  logout( ): Observable<any> {
+    return this.http.post(AUTH_API + 'logout' , httpOptions);
+  }
   refreshToken(token: string) {
-    return this.http.post(AUTH_API + 'refreshtoken', {
-      refreshToken: token
-    }, httpOptions);
+    return this.http.post(AUTH_API + 'refresh',  httpOptions);
   }
 }

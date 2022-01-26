@@ -433,9 +433,7 @@
 <c-row>
   <c-col xs>
     <c-card class="mb-4">
-      <c-card-header>Comment</c-card-header>
-      <c-card-body>
-        <table [hover]="true" [responsive]="true" align="middle" cTable class="mb-0 border">
+         <table [hover]="true" [responsive]="true" align="middle" cTable class="mb-0 border">
           <thead>
             <tr class="maindark">
               <th> ID </th>
@@ -451,24 +449,24 @@
           </thead>
           <tbody *ngFor="let commentd of comment; index as i">
              <tr *ngIf="commentd.replied&&(page-1)*10<=i&&(page)*10>=i" class="dark">
-              <td>{{i}} </td>
-              <td>{{commentd.annotation_position}} </td>
-              <td>{{commentd.owned_by_name}} </td>
-              <td>{{commentd.annotation_title}} </td>
-              <td>{{commentd.comment_created_date }} </td>
-              <td>{{commentd.comment_text}} </td>
-              <td><a [href]="commentd.link" target="_blank" class="linkimg"> <img src="../../../assets/img/color.svg">
+              <td class="commwnt1">{{i}} </td>
+              <td class="commwnt2">{{commentd.annotation_position | date }} </td>
+              <td class="commwnt3">{{commentd.owned_by_name}} </td>
+              <td class="commwnt4">{{commentd.annotation_title}} </td>
+              <td class="commwnt5">{{commentd.comment_created_date }} </td>
+              <td class="commwnt6">{{commentd.comment_text}} </td>
+              <td class="commwnt7" ><a [href]="commentd.link" target="_blank" class="linkimg"> <img src="../../../assets/img/color.svg">
                 </a>
               </td>
             </tr>
             <tr *ngIf="!commentd.replied&&(page-1)*10<=i&&(page)*10>=i" class="light">
-              <td>{{i}} </td>
-              <td>{{commentd.annotation_position}} </td>
-              <td>{{commentd.owned_by_name}} </td>
-              <td>{{commentd.annotation_title}} </td>
-              <td>{{commentd.comment_created_date }} </td>
-              <td>{{commentd.comment_text}} </td>
-              <td><a [href]="commentd.link" target="_blank" class="linkimg"> <img src="../../../assets/img/color.svg">
+              <td class="commwnt1">{{i}} </td>
+              <td class="commwnt2">{{commentd.annotation_position}} </td>
+              <td class="commwnt3">{{commentd.owned_by_name}} </td>
+              <td class="commwnt4">{{commentd.annotation_title}} </td>
+              <td class="commwnt5">{{commentd.comment_created_date }} </td>
+              <td class="commwnt6">{{commentd.comment_text}} </td>
+              <td class="commwnt7"><a [href]="commentd.link" target="_blank" class="linkimg"> <img src="../../../assets/img/color.svg">
                 </a>
               </td>
             </tr>
@@ -480,7 +478,6 @@
 
         </table>   <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [rotate]="true"
         [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
-      </c-card-body>
-    </c-card>
+     </c-card>
   </c-col>
 </c-row>

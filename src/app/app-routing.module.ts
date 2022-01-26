@@ -7,11 +7,14 @@ import { Page500Component } from './views/pages/page500/page500.component';
 import { LoginComponent } from './views/pages/login/login.component';
 import { RegisterComponent } from './views/pages/register/register.component';
 import { AuthGuard } from './auth.guard';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './helpers/auth.interceptor';
+import { DatePipe } from '@angular/common';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
   },
   {
@@ -24,7 +27,7 @@ const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () =>
-          import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule) 
+          import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule) ,canActivate:[AuthGuard]
       },
       {
         path: 'theme',
@@ -102,7 +105,7 @@ const routes: Routes = [
       title: 'Register Page'
     }
   },
-  {path: '**', redirectTo: 'login'}
+  {path: '**', redirectTo: 'dashboard'}
 ];
 
 @NgModule({
@@ -114,7 +117,13 @@ const routes: Routes = [
       // relativeLinkResolution: 'legacy'
     })
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [DatePipe,AuthGuard,{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }]
+
 })
 export class AppRoutingModule {
 }

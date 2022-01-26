@@ -12,14 +12,17 @@ export class AuthGuard implements CanActivate {
      ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.helperService.getUser == null || this.helperService.getUser == {}) {
-      this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } })
-      return false;
-    } else {
+    if ((this.helperService.getUserstate() ) )
+   {
 
-      this.router.navigate(['/dashboard'], { queryParams: { returnUrl: state.url } })
-      return false;
-    }
+     return true;
+
+   }
+   else {
+    this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } })
+
+     return false;
+   }
 
   }
 }

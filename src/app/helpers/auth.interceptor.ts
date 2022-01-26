@@ -9,7 +9,7 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take } from 'rxjs/operators';
 
 // const TOKEN_HEADER_KEY = 'Authorization';        // for Spring Boot back-end
-const TOKEN_HEADER_KEY = 'x-access-token';          // for Node.js Express back-end
+const TOKEN_HEADER_KEY = 'Authorization';          // for Node.js Express back-end
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -20,13 +20,17 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<Object>> {
     let authReq = req;
-    const token = this.tokenService.getToken();
-    if (token != null) {
+    let token = this.tokenService.getToken();
+    if (token != null && !authReq.url.includes("login") && !authReq.url.includes("register")) {
       authReq = this.addTokenHeader(req, token);
+    }
+    else if (authReq.url.includes("refresh")) {
+      token = this.tokenService.getRefreshToken()
+      authReq = this.addTokenHeader(req, token || "");
     }
 
     return next.handle(authReq).pipe(catchError(error => {
-      if (error instanceof HttpErrorResponse && !authReq.url.includes('auth/signin') && error.status === 401) {
+      if (error instanceof HttpErrorResponse && !authReq.url.includes('login') && error.status === 401) {
         return this.handle401Error(authReq, next);
       }
 
@@ -48,12 +52,12 @@ export class AuthInterceptor implements HttpInterceptor {
 
             this.tokenService.saveToken(token.accessToken);
             this.refreshTokenSubject.next(token.accessToken);
-            
+
             return next.handle(this.addTokenHeader(request, token.accessToken));
           }),
           catchError((err) => {
             this.isRefreshing = false;
-            
+
             this.tokenService.signOut();
             return throwError(err);
           })

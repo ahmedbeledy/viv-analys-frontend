@@ -16,7 +16,7 @@ let httpOptions = {
 export class CommentService {
   constructor(private http: HttpClient, private tokens: TokenStorageService) {
     token = this.tokens.getToken() || ""
-    httpOptions["headers"]= new HttpHeaders({ 'Content-Type': 'application/json',"Authorization":token })
+    // httpOptions["headers"]= new HttpHeaders({ 'Content-Type': 'application/json',"Authorization":token })
 
 
   }
