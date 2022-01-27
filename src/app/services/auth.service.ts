@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-const AUTH_API = 'http://localhost:5000/api/';
-
+import { environment } from 'src/environments/environment';
+const AUTH_API = environment.AUTH_API
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -31,7 +30,7 @@ export class AuthService {
   logout( ): Observable<any> {
     return this.http.post(AUTH_API + 'logout' , httpOptions);
   }
-  refreshToken(token: string) {
+  refreshToken() {
     return this.http.post(AUTH_API + 'refresh',  httpOptions);
   }
 }

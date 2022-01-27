@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Comments } from 'src/app/data/comment';
 import { CommentService } from 'src/app/services/comments.service';
+import * as moment from 'moment';
 
 import { DashboardChartsData, IChartProps } from './dashboard-charts-data';
 
@@ -23,13 +24,20 @@ export class DashboardComponent implements OnInit {
   public trafficRadioGroup = new FormGroup({
     trafficRadio: new FormControl('Month')
   });
-
+  date: number = Date.now();
   ngOnInit(): void {
     this.initCharts();
     this.commentservice.getAllComments().subscribe(
       data => {
-  
-        this.comment =data.data 
+        data.data.forEach((element:any) => {
+          element.annotation_position =moment(element.annotation_position)
+          element.comment_created_date =moment(element.comment_created_date)
+          
+        });
+        this.comment = data.data  as Comments[]| []
+        
+        
+        console.log( this.comment);
         
       this.collectionSize=this.comment?.length || 0
       })

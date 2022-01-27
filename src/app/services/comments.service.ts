@@ -3,7 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TokenStorageService } from './token-storage.service';
 
-const AUTH_API = 'http://localhost:5000/api/';
+import { environment } from 'src/environments/environment';
+const AUTH_API = environment.AUTH_API
 let token = ""
 let httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

@@ -21,12 +21,13 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<Object>> {
     let authReq = req;
     let token = this.tokenService.getToken();
-    if (token != null && !authReq.url.includes("login") && !authReq.url.includes("register")) {
-      authReq = this.addTokenHeader(req, token);
+    let refreshToken = this.tokenService.getRefreshToken()
+
+    if (authReq.url.includes("refresh")) {
+      authReq = this.addTokenHeader(req, refreshToken || "");
     }
-    else if (authReq.url.includes("refresh")) {
-      token = this.tokenService.getRefreshToken()
-      authReq = this.addTokenHeader(req, token || "");
+    else if (token != null && !authReq.url.includes("login") && !authReq.url.includes("register")) {
+      authReq = this.addTokenHeader(req, token);
     }
 
     return next.handle(authReq).pipe(catchError(error => {
@@ -46,14 +47,17 @@ export class AuthInterceptor implements HttpInterceptor {
       const token = this.tokenService.getRefreshToken();
 
       if (token)
-        return this.authService.refreshToken(token).pipe(
+        return this.authService.refreshToken().pipe(
           switchMap((token: any) => {
             this.isRefreshing = false;
 
-            this.tokenService.saveToken(token.accessToken);
-            this.refreshTokenSubject.next(token.accessToken);
+            this.tokenService.saveToken(token.access_token);
+            this.refreshTokenSubject.next('Bearer '+ token.access_token);
+            let oldtoken=request.headers.get(TOKEN_HEADER_KEY) ||""
+            request=     request.clone({ headers: request.headers.delete(TOKEN_HEADER_KEY, oldtoken) });
 
-            return next.handle(this.addTokenHeader(request, token.accessToken));
+            request=        this.addTokenHeader(request,'Bearer '+ token.access_token)
+            return next.handle(request);
           }),
           catchError((err) => {
             this.isRefreshing = false;
