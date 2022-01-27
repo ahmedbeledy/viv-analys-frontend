@@ -1,4 +1,5 @@
 export interface Comments {
+    annotation_id:number,
     replied: boolean;
     annotation_position: number;
     owned_by_name: string;
