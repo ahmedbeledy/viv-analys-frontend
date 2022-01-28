@@ -23,9 +23,10 @@ color: #fff;
 }ul.pagination {
   max-width: 1vw!important;
 }td ,th {
-  font-family: "Roboto";
   font-weight: 400;
-  font-size:  1.6949vw;
+  line-height: 1.6949vw;
+  font-size: 1.2vw;
+
 }
 td.commwnt1 {
   width: 3.47vw;
@@ -41,7 +42,8 @@ td.commwnt1 {
   white-space: nowrap;
 }td.commwnt4 {
   max-width: 23.559322033898vw;
-  text-overflow: ellipsis;
+  min-width: 13vw;
+    text-overflow: ellipsis;
   white-space: nowrap;
  
 }td.commwnt5 {
@@ -49,5 +51,5 @@ td.commwnt1 {
   text-overflow: ellipsis;
   white-space: nowrap;
 }td.commwnt6 {
-  max-width: 23.55932203389vw;  
+  width: 23.55932203389vw;  
  } 
