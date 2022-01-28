@@ -450,7 +450,7 @@
             </tr>
           </thead>
           <tbody *ngFor="let commentd of comment; index as i">
-             <tr *ngIf="commentd.replied&&(page-1)*10<=i&&(page)*10>=i" class="dark">
+             <tr *ngIf="commentd.replied&&(page-1)*100<=i&&(page)*100>=i" class="dark">
               <td class="commwnt1">{{commentd.annotation_id}} </td>
               <td class="commwnt2">{{commentd.annotation_position | date:'hh:mm ,MM/YY'  }} </td>
               <td class="commwnt3">{{commentd.owned_by_name}} </td>
@@ -462,7 +462,7 @@
                 </a>
               </td>
             </tr>
-            <tr *ngIf="!commentd.replied&&(page-1)*10<=i&&(page)*10>=i" class="light">
+            <tr *ngIf="!commentd.replied&&(page-1)*100<=i&&(page)*100>=i" class="light">
               <td class="commwnt1">{{commentd.annotation_id}} </td>
               <td class="commwnt2">{{commentd.annotation_position | date:'hh:mm ,MM/YY'  }} </td>
               <td class="commwnt3">{{commentd.owned_by_name}} </td>
