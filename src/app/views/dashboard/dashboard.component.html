@@ -436,12 +436,12 @@
          <table [hover]="true" [responsive]="true" align="middle" cTable class="mb-0 border">
           <thead>
             <tr class="maindark">
-              <th> ID </th>
-              <th>Position</th>
-              <th>Owned by</th>
-              <th>Annotation title</th>
-              <th>Date</th>
-              <th>Last comment</th>
+              <th class="commwnt1"> ID </th>
+              <th class="commwnt2">Position</th>
+              <th class="commwnt3" >Owned by</th>
+              <th class="commwnt4">Annotation title</th>
+              <th class="commwnt5">Date</th>
+              <th class="commwnt6">Last comment</th>
               <th> <i class="cis-link-alt"></i>
 
               </th>
@@ -452,10 +452,10 @@
           <tbody *ngFor="let commentd of comment; index as i">
              <tr *ngIf="commentd.replied&&(page-1)*10<=i&&(page)*10>=i" class="dark">
               <td class="commwnt1">{{commentd.annotation_id}} </td>
-              <td class="commwnt2">{{commentd.annotation_position | date:'h:mm ,MM/YY'  }} </td>
+              <td class="commwnt2">{{commentd.annotation_position | date:'hh:mm ,MM/YY'  }} </td>
               <td class="commwnt3">{{commentd.owned_by_name}} </td>
               <td class="commwnt4">{{commentd.annotation_title}} </td>
-              <td class="commwnt5">{{commentd.comment_created_date | date:'h:mm ,MM/YY' }} </td>
+              <td class="commwnt5">{{commentd.comment_created_date | date:'hh:mm ,MM/YY' }} </td>
               <td class="commwnt6">{{commentd.comment_text}} </td>
 
               <td class="commwnt7" ><a [href]="commentd.link" target="_blank" class="linkimg"> <img src="../../../assets/img/color.svg">
@@ -464,10 +464,10 @@
             </tr>
             <tr *ngIf="!commentd.replied&&(page-1)*10<=i&&(page)*10>=i" class="light">
               <td class="commwnt1">{{commentd.annotation_id}} </td>
-              <td class="commwnt2">{{commentd.annotation_position | date:'h:mm ,MM/YY'  }} </td>
+              <td class="commwnt2">{{commentd.annotation_position | date:'hh:mm ,MM/YY'  }} </td>
               <td class="commwnt3">{{commentd.owned_by_name}} </td>
               <td class="commwnt4">{{commentd.annotation_title}} </td>
-              <td class="commwnt5">{{commentd.comment_created_date | date:'h:mm ,MM/YY' }} </td>
+              <td class="commwnt5">{{commentd.comment_created_date | date:'hh:mm ,MM/YY' }} </td>
               <td class="commwnt6">{{commentd.comment_text}} </td>
               <td class="commwnt7"><a [href]="commentd.link" target="_blank" class="linkimg"> <img src="../../../assets/img/color.svg">
                 </a>

@@ -11,8 +11,8 @@ color: #fff;
 }
 .linkimg {
   background: #008BFF;
-  border-radius: 3px;
-  padding: 1px 8px 5px 8px;
+  border-radius: .3vw;
+  padding: .1vw .8vw .5vw .8vw;
 }td {
    overflow: hidden;
 
@@ -21,8 +21,8 @@ color: #fff;
     color: #000;
     opacity: .3;
 }ul.pagination {
-  width: 1vw!important;
-}td {
+  max-width: 1vw!important;
+}td ,th {
   font-family: "Roboto";
   font-weight: 400;
   font-size:  1.6949vw;
@@ -36,11 +36,11 @@ td.commwnt1 {
   text-overflow: ellipsis;
   white-space: nowrap;
 }td.commwnt3 {
-  width: 12.37vw;
+  max-width: 12.37vw;
   text-overflow: ellipsis;
   white-space: nowrap;
 }td.commwnt4 {
-  width: 23.559322033898vw;
+  max-width: 23.559322033898vw;
   text-overflow: ellipsis;
   white-space: nowrap;
  
@@ -49,5 +49,5 @@ td.commwnt1 {
   text-overflow: ellipsis;
   white-space: nowrap;
 }td.commwnt6 {
-  width: 23.55932203389vw;  
+  max-width: 23.55932203389vw;  
  } 
